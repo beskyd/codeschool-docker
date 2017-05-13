@@ -50,3 +50,42 @@ To access `fortune` game without typing every time `/usr/games/fortune` update t
     fortune
 ```
 
+#### Dockerfile
+
+The filename is important -- it's always `Dockerfile` with a capital D.
+The first line is usually the `FROM` keyword followed by a *base image* name.
+```bash
+    <!-- Dockerfile -->
+    FROM httpd:2.4
+    <!-- expose a port inside a container -->
+    EXPOSE 80
+    <!-- install fortunes inside a container -->
+    RUN apt-get update
+    RUN apt-get install -y fortunes
+```
+You can combine multiple run statements inside a Dockerfile
+```bash
+    RUN apt-get update && apt-get install -y fortunes
+```
+The `LABEL` instruction allows to put contact information inside a Dockerfile with `key="value"` pairs
+```bash
+    LABEL maintainer="moby-dock@example.com"
+```
+##### Build an image from a Dockerfile
+
+```bash
+    docker image build --tag <image_name>:<image_version> .
+```
+for example
+```bash 
+    docker image build --tag web-server:1.0 .
+```
+List built images
+```bash
+    docker image ls
+```
+Run a Container from a custom image
+```bash 
+    docker container run -p 80:80 web-server:1.0
+```
+
