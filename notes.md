@@ -89,3 +89,24 @@ Run a Container from a custom image
     docker container run -p 80:80 web-server:1.0
 ```
 
+
+#### Volumes
+
+Copying files into a running container 
+```bash
+    docker container cp page.html elegant_noether:/usr/local/apache2/htdocs/
+```
+To verify the `page.html` file now exists in the container type
+```bash
+    curl localhost:80/page.html
+```
+Copying files through Dockerfile instructions
+```bash
+    <!--inside a Dockerfile -->
+    COPY page.html /usr/local/apache2/htdocs/
+```
+##### Creating a Volume
+Create a link between the folder `/my-files` on the host machine and the `htdocs` folder inside a container. This also runs the container in the background
+```bash
+    docker run -d -p 80:80 -v /my-files:/usr/local/apache2/htdocs web-server:1.1
+```
